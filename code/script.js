@@ -252,35 +252,48 @@ const setSecret = () => {
 // This function to start (and restart) the game
 const start = () => {
   // Here we're setting charactersInPlay array to be all the characters to start with
-  charactersInPlay = CHARACTERS
+  charactersInPlay = CHARACTERS;
   // What else should happen when we start the game?
+  generateBoard();
+  setSecret();
+
 }
 
 // setting the currentQuestion object when you select something in the dropdown
 const selectQuestion = () => {
-  const category = questions.options[questions.selectedIndex].parentNode.label
+  const category = questions.options[questions.selectedIndex].parentNode.label;
+  const choiceValue = questions.options[questions.selectedIndex].value;
   // This variable stores what option group (category) the question belongs to.
   // We also need a variable that stores the actual value of the question we've selected.
 
   if (category === 'hair color') {
     currentQuestion = {
       attribute: 'hairColor',
-      // value: ,
-      // 👆 add the value from the input here
+      value:choiceValue ,
       category: category,
     }
   } else if (category === 'eye color') {
+    currentQuestion = {
+    attribute: 'eyeColor',
+    value:choiceValue ,
+    category: category,
+    }
     // Set this up your self
   } else if (category === 'accessories') {
     currentQuestion = {
-      //attribute: ,
+      attribute: choiceValue ,
       // 👆 this is the property of the booleans such as smoke, glasses and hat. add the value from the input here
       value: true, // we're asking if this person wears a hat for exaple, so always true in the question.
       category: category,
     }
   } else if (category === 'other') {
-    // Set this up your self (should be same structure as above)
-  }
+    currentQuestion = {
+      attribute: choiceValue ,
+      value: true, 
+      category: category,
+    }  }
+
+    console.log(currentQuestion);
 }
 
 // This function should be invoked when you click on 'Find Out'.
@@ -341,3 +354,5 @@ start()
 
 // All the event listeners
 restartButton.addEventListener('click', start)
+questions.addEventListener('change', selectQuestion)
+
